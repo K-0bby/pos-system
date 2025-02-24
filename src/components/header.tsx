@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Bell, LogOut, UserRoundPen, UserRoundPlus } from "lucide-react";
+import { Bell, LogOut, UserRoundPen } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -9,23 +9,101 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-// import SearchField from "./search-field";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
+
+interface Notification {
+  id: string;
+  message: string;
+  date: Date;
+  read: boolean;
+}
 
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [notification, setNotification] = useState<Notification[]>([
+    {
+      id: "1",
+      message: "Low stock alert: Premium Lager",
+      date: new Date(),
+      read: false,
+    },
+    {
+      id: "2",
+      message: "New order received #1234",
+      date: new Date(Date.now() - 3600000),
+      read: false,
+    },
+  ]);
+
+  const unreadCount = notification.filter((n) => !n.read).length;
+
+  const markAsRead = (id: string) => {
+    setNotification((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, read: true } : n))
+    );
+  };
+
+  const markAllAsRead = () => {
+    setNotification((prev) => prev.map((n) => ({ ...n, read: true })));
+  };
 
   return (
     <div className="flex justify-end items-center px-10 py-4">
-      {/* <div className="w-[400px]">
-        <SearchField />
-      </div> */}
-      <div className="flex items-center gap-4">
-        <div className="flex items-center">
-          <Bell className="h-6 w-6 text-gray-600" />
-        </div>
-
-        <div className="h-6 w-[1px] bg-gray-300"></div>
+      <div className="flex items-center gap-5">
+        {/* Notifications */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="relative rounded-full">
+              <Bell className="h-8 w-8 text-gray-600" />
+              {unreadCount > 0 && (
+                <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500" />
+              )}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-80">
+            <div className="flex items-center justify-between px-4 py-2 border-b">
+              <span className="font-semibold">Notifications</span>
+              {unreadCount > 0 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={markAllAsRead}
+                  className="text-xs"
+                >
+                  Mark all as read
+                </Button>
+              )}
+            </div>
+            <div className="max-h-[300px] overflow-y-auto">
+              {notification.map((notification) => (
+                <DropdownMenuItem
+                  key={notification.id}
+                  className="px-4 py-3 cursor-pointer"
+                  onClick={() => markAsRead(notification.id)}
+                >
+                  <div className="flex items-start gap-2">
+                    {!notification.read && (
+                      <div className="h-2 w-2 rounded-full bg-blue-500 mt-2 flex-shrink-0" />
+                    )}
+                    <div className="flex-1">
+                      <p
+                        className={
+                          notification.read ? "text-gray-600" : "font-medium"
+                        }
+                      >
+                        {notification.message}
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {notification.date.toLocaleTimeString()}
+                      </p>
+                    </div>
+                  </div>
+                </DropdownMenuItem>
+              ))}
+            </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         <DropdownMenu onOpenChange={(open) => setIsDropdownOpen(open)}>
           <DropdownMenuTrigger asChild>
@@ -36,11 +114,11 @@ export default function Header() {
                   alt="user"
                   className="border border-[#F3C5D5] rounded-full bg-[#F3C5D5]"
                 />
-                <AvatarFallback>SS</AvatarFallback>
+                <AvatarFallback>RS</AvatarFallback>
               </Avatar>
 
               <span className="text-sm font-medium text-gray-700">
-                Sharon Sings
+                Robert Singer
               </span>
               <span
                 className={`text-gray-700 transition-transform ${
@@ -66,26 +144,21 @@ export default function Header() {
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="rounded-lg">
-            <div className="border border-gray-200 rounded-lg">
-              <DropdownMenuItem asChild>
-                <Link href="/profile-settings" className="flex items-center gap-2">
-                  <UserRoundPen />
-                  Profile settings
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/new-account" className="flex items-center gap-2">
-                  <UserRoundPlus />
-                  New account
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/logout" className="flex items-center gap-2">
-                  <LogOut />
-                  Logout
-                </Link>
-              </DropdownMenuItem>
-            </div>
+            <DropdownMenuItem asChild>
+              <Link
+                href="/profile-settings"
+                className="flex items-center gap-2"
+              >
+                <UserRoundPen />
+                Profile settings
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/logout" className="flex items-center gap-2">
+                <LogOut />
+                Logout
+              </Link>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
