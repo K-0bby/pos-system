@@ -20,7 +20,7 @@ export default function Layout({ children }: LayoutProps) {
           <SidebarTrigger />
           <main className="max-w-8xl w-full p-2 md:p-6 mx-auto">
             <Header />
-            <div className="border-b border-gray-100 my-1" />
+            <div className="border-b border-gray-100 pb-1" />
             {children}
           </main>
           <Toaster />
