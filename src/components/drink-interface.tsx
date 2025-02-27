@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@radix-ui/react-tabs";
 import { List, Grid } from "lucide-react";
 import Image from "next/image";
@@ -11,43 +11,64 @@ import {
   PaginationItem,
   PaginationLink,
 } from "@/components/ui/pagination";
-import { drinks, Product } from "@/lib/data"; // Import your drinks data
+import { drinks, Product } from "@/lib/data"; // Importing drinks data
 import { useCart } from "@/context/cart-context";
 import { toast } from "sonner";
 
+
+interface DrinksInterfaceProps {
+  searchQuery: string; // Receive search query as a prop
+}
+
 const categories = ["Beer", "Wine & Spirit", "Tots", "Soft Drinks", "Others"];
 
-export default function DrinksInterface() {
-  const { dispatch } = useCart();
+export default function DrinksInterface({ searchQuery }: DrinksInterfaceProps) {
+  const { state, dispatch } = useCart();
   const [selectedTab, setSelectedTab] = useState("Beer");
   const [currentPage, setCurrentPage] = useState(1);
   const [viewType, setViewType] = useState<"grid" | "list">("grid");
+  const [stock, setStock] = useState<Product[]>([...drinks]); // Dynamic stock tracking
+
   const itemsPerPage = 10;
 
-  const filteredDrinks = drinks.filter(
-    (drink) => drink.category === selectedTab
+  useEffect(() => {
+    // Sync stock with the cart
+    const updatedStock = drinks.map((drink) => {
+      const cartItem = state.items.find((item) => item.id === drink.id);
+      const updatedQty = drink.qty - (cartItem?.quantity || 0); // Subtract cart quantities
+      return {
+        ...drink,
+        qty: Math.max(updatedQty, 0), // Prevent negative qty
+        inStock: updatedQty > 0,
+      };
+    });
+    setStock(updatedStock);
+  }, [state.items]);
+
+  const filteredDrinks = stock.filter(
+    (drink) => drink.category === selectedTab && (!searchQuery || drink.name.toLowerCase().includes(searchQuery.toLowerCase()))
   );
+
+
   const totalPages = Math.ceil(filteredDrinks.length / itemsPerPage);
   const paginatedDrinks = filteredDrinks.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  function handleTabChange(tab: string) {
+  const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
     setCurrentPage(1);
-  }
+  };
 
-  function handleAddToCart(drink: Product) {
-    if (drink.inStock && drink.qty > 0) {
+  const handleAddToCart = (drink: Product) => {
+    if (drink.qty > 0) {
       dispatch({ type: "ADD_ITEM", payload: drink });
-      drink.qty -= 1; // Reduce stock quantity
-      drink.inStock = drink.qty > 0; // Update stock status
       toast.success(`${drink.name} has been added to the cart`);
     } else {
       toast.error(`${drink.name} is out of stock`);
     }
-  }
+  };
 
   return (
     <div className="flex flex-col">
@@ -109,112 +130,39 @@ export default function DrinksInterface() {
                       : "w-full"
                   )}
                 >
-                  {viewType === "grid" ? (
-                    paginatedDrinks.map((drink) => (
-                      <div
-                        key={drink.id}
-                        className={clsx(
-                          "relative group flex flex-col items-center",
-                          drink.inStock && drink.qty > 0
-                            ? "cursor-pointer"
-                            : "cursor-not-allowed"
-                        )}
-                        onClick={() => {
-                          if (drink.inStock && drink.qty > 0) {
-                            handleAddToCart(drink);
-                          } else {
-                            toast.error(`${drink.name} is out of stock`);
-                          }
-                        }}
-                      >
-                        <Image
-                          src={drink.image}
-                          alt={drink.name}
-                          width={100}
-                          height={100}
-                          className="w-auto h-32 rounded-full mb-2"
-                        />
-                        <p className="text-sm text-center">{drink.name}</p>
-                        <p className="text-sm text-center text-gray-500">
-                          Qty: {drink.qty}
-                        </p>
-                        <p className="text-sm text-center text-gray-500">
-                          GH¢ {drink.price.retail.toFixed(2)}
-                        </p>
-                        {drink.inStock && (
-                          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200 rounded-lg flex items-center justify-center">
-                            <span className="opacity-0 group-hover:opacity-100 text-xs text-white font-medium bg-black/80 px-4 py-2 rounded-full transform translate-y-2 group-hover:translate-y-0 transition-all duration-200">
-                              Add to Cart
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    ))
-                  ) : (
-                    <table className="w-full text-sm border-collapse border border-gray-200">
-                      <thead>
-                        <tr>
-                          <th className="border border-gray-300 px-4 py-2">
-                            Image
-                          </th>
-                          <th className="border border-gray-300 px-4 py-2">
-                            Name
-                          </th>
-                          <th className="border border-gray-300 px-4 py-2">
-                            Qty
-                          </th>
-                          <th className="border border-gray-300 px-4 py-2">
-                            Retail Price
-                          </th>
-                          <th className="border border-gray-300 px-4 py-2">
-                            Wholesale Price
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {paginatedDrinks.map((drink) => (
-                          <tr
-                            key={drink.id}
-                            className={clsx(
-                              "hover:bg-gray-100",
-                              drink.inStock && drink.qty > 0
-                                ? "cursor-pointer"
-                                : "cursor-not-allowed"
-                            )}
-                            onClick={() => {
-                              if (drink.inStock && drink.qty > 0) {
-                                handleAddToCart(drink);
-                              } else {
-                                toast.error(`${drink.name} is out of stock`);
-                              }
-                            }}
-                          >
-                            <td className="border border-gray-300 px-4 py-2">
-                              <Image
-                                src={drink.image}
-                                alt={drink.name}
-                                width={64}
-                                height={64}
-                                className="w-18 h-24 rounded-full"
-                              />
-                            </td>
-                            <td className="border border-gray-300 px-4 py-2 text-center">
-                              {drink.name}
-                            </td>
-                            <td className="border border-gray-300 px-4 py-2 text-center text-gray-500">
-                              {drink.qty}
-                            </td>
-                            <td className="border border-gray-300 px-4 py-2 text-center text-gray-500">
-                              GH¢ {drink.price.retail.toFixed(2)}
-                            </td>
-                            <td className="border border-gray-300 px-4 py-2 text-center text-gray-500">
-                              GH¢ {drink.price.wholesale.toFixed(2)}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  )}
+                  {paginatedDrinks.map((drink) => (
+                    <div
+                      key={drink.id}
+                      className={clsx(
+                        "relative group flex flex-col items-center",
+                        drink.qty > 0
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed opacity-50"
+                      )}
+                      onClick={() => {
+                        if (drink.qty > 0) {
+                          handleAddToCart(drink);
+                        } else {
+                          toast.error(`${drink.name} is out of stock`);
+                        }
+                      }}
+                    >
+                      <Image
+                        src={drink.image}
+                        alt={drink.name}
+                        width={100}
+                        height={100}
+                        className="w-auto h-32 rounded-full mb-2"
+                      />
+                      <p className="text-sm text-center">{drink.name}</p>
+                      <p className="text-sm text-center text-gray-500">
+                        {drink.qty > 0 ? `Qty: ${drink.qty}` : "Out of Stock"}
+                      </p>
+                      <p className="text-sm text-center text-gray-500">
+                        GH¢ {drink.price.retail.toFixed(2)}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               )}
             </TabsContent>

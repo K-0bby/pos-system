@@ -4,6 +4,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { Theme } from "@radix-ui/themes";
 import Header from "@/components/header";
 import { CartProvider } from "@/context/cart-context"; // Import CartProvider
+import { Toaster } from "@/components/ui/sonner";
 
 interface LayoutProps {
   children: ReactNode;
@@ -12,7 +13,8 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   return (
     <Theme>
-      <CartProvider>{/* Wrap the entire layout with CartProvider */}
+      <CartProvider>
+        {/* Wrap the entire layout with CartProvider */}
         <SidebarProvider>
           <AppSidebar />
           <SidebarTrigger />
@@ -21,6 +23,7 @@ export default function Layout({ children }: LayoutProps) {
             <div className="border-b border-gray-100 my-1" />
             {children}
           </main>
+          <Toaster />
         </SidebarProvider>
       </CartProvider>
     </Theme>

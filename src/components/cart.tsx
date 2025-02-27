@@ -49,8 +49,18 @@ export default function Cart() {
     const item = state.items.find((item) => item.id === id);
     if (item) {
       if (item.qty > 0) {
+        // Dispatch the action to add one item
         dispatch({ type: "ADD_ITEM", payload: item });
-        item.qty -= 1; // Reduce available stock
+
+        // Reduce stock by 1
+        item.qty -= 1;
+
+        // Update stock availability
+        if (item.qty === 0) {
+          item.inStock = false;
+        }
+
+        // Notify the user
         toast.success(`${item.name} added to cart`);
       } else {
         toast.error(`${item.name} is out of stock`);
@@ -61,17 +71,39 @@ export default function Cart() {
   const handleRemoveOne = (id: string) => {
     const item = state.items.find((item) => item.id === id);
     if (item) {
-      dispatch({ type: "REMOVE_ONE", payload: id });
-      item.qty += 1; // Restock quantity
-      toast.success(`${item.name} removed from cart`);
+      if (item.quantity > 0) {
+        // Dispatch the action to remove one item
+        dispatch({ type: "REMOVE_ONE", payload: id });
+
+        // Increase stock by 1
+        item.qty += 1;
+
+        // Update stock availability
+        if (item.qty > 0) {
+          item.inStock = true;
+        }
+
+        // Notify the user
+        toast.success(`${item.name} removed from cart`);
+      }
     }
   };
 
   const handleRemoveItem = (id: string) => {
     const item = state.items.find((item) => item.id === id);
     if (item) {
+      // Dispatch the action to remove all items of this type
       dispatch({ type: "REMOVE_ITEM", payload: id });
-      item.qty += item.quantity; // Restock all removed quantity
+
+      // Restock the quantity
+      item.qty += item.quantity;
+
+      // Update stock availability
+      if (item.qty > 0) {
+        item.inStock = true;
+      }
+
+      // Notify the user
       toast.success(`${item.name} removed from cart`);
     }
   };
