@@ -1,8 +1,8 @@
 "use client";
 
-import { Input } from "@/components/ui/input"; // ShadCN Input component
+import { Input } from "@/components/ui/input"; 
 import { useDebouncedCallback } from "use-debounce";
-import { Search as SearchIcon } from "lucide-react"; // Lucide icon
+import { Search as SearchIcon } from "lucide-react"; 
 
 interface SearchProps {
   placeholder: string;
@@ -22,7 +22,7 @@ export default function Search({ placeholder, onSearch }: SearchProps) {
       <Input
         id="search"
         placeholder={placeholder}
-        className="pl-10 focus:outline-none h-12 rounded-xl" // Add padding for the icon
+        className="pl-10 focus:outline-none h-12 rounded-xl" 
         onChange={(e) => handleSearch(e.target.value)}
       />
       <SearchIcon className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500" />
