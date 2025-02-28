@@ -18,8 +18,8 @@ export default function Page() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <SummaryCard
           title="Total Revenue"
-          value="$319,000"
-          icon="DollarSign"
+          value="₵319,000"
+          icon="ReceiptCent"
           subtitle="+20.1% from last month"
         />
         <SummaryCard
@@ -36,7 +36,7 @@ export default function Page() {
         />
         <SummaryCard
           title="Avg. Order Value"
-          value="$106"
+          value="₵106"
           icon="BarChart"
           subtitle="+5% from last month"
         />

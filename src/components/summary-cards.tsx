@@ -1,15 +1,16 @@
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import {
-  DollarSign,
+  // DollarSign,
   Package,
   TrendingUp,
   BarChart as BarChartIcon,
+  ReceiptCent
 } from "lucide-react";
 
 interface SummaryCardProps {
   title: string;
   value: string;
-  icon: "DollarSign" | "Package" | "TrendingUp" | "BarChart";
+  icon: "ReceiptCent" | "Package" | "TrendingUp" | "BarChart";
   subtitle: string;
 }
 
@@ -20,7 +21,7 @@ export function SummaryCard({
   subtitle,
 }: SummaryCardProps) {
   const IconComponent = {
-    DollarSign,
+    ReceiptCent,
     Package,
     TrendingUp,
     BarChart: BarChartIcon,
