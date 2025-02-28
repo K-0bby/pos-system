@@ -64,8 +64,8 @@ export const drinks: Product[] = [
     name: "GUINNESS",
     category: "Beer",
     price: { retail: 30.0, wholesale: 26.5 },
-    qty: 0,
-    inStock: false,
+    qty: 30,
+    inStock: true,
     image:
       "https://i.pinimg.com/564x/a2/e6/ef/a2e6ef8a91488f04ff0caa53cd96c62e.jpg",
   },
@@ -94,8 +94,8 @@ export const drinks: Product[] = [
     name: "PILSNER URQUELL",
     category: "Beer",
     price: { retail: 26.0, wholesale: 22.5 },
-    qty: 0,
-    inStock: false,
+    qty: 12,
+    inStock: true,
     image:
       "https://i.pinimg.com/564x/f6/a2/3b/f6a23bcc5434eb2d84b0a97a232cfa32.jpg",
   },
@@ -114,8 +114,8 @@ export const drinks: Product[] = [
     name: "LEFFE BLOND",
     category: "Beer",
     price: { retail: 29.0, wholesale: 25.0 },
-    qty: 0,
-    inStock: false,
+    qty: 10,
+    inStock: true,
     image:
       "https://i.pinimg.com/564x/9d/b0/62/9db062193b2259352f71d4b55091b849.jpg",
   },
@@ -124,7 +124,7 @@ export const drinks: Product[] = [
     name: "JACK DANIEL'S",
     category: "Wine & Spirit",
     price: { retail: 120.0, wholesale: 100.0 },
-    qty: 5,
+    qty: 15,
     inStock: true,
     image:
       "https://i.pinimg.com/564x/03/96/2f/03962f6ebacefc413dcfc0ce9a14e2e6.jpg",
@@ -134,8 +134,8 @@ export const drinks: Product[] = [
     name: "ABSOLUT VODKA",
     category: "Wine & Spirit",
     price: { retail: 90.0, wholesale: 80.0 },
-    qty: 0,
-    inStock: false,
+    qty: 15,
+    inStock: true,
     image:
       "https://i.pinimg.com/564x/ed/6b/ca/ed6bca3f6979a983761f6a91544fd3c9.jpg",
   },
@@ -144,7 +144,7 @@ export const drinks: Product[] = [
     name: "TROEGS PERPETUAL IPA",
     category: "Beer",
     price: { retail: 34.0, wholesale: 30.0 },
-    qty: 5,
+    qty: 15,
     inStock: true,
     image:
       "https://i.pinimg.com/564x/9e/b4/84/9eb4845cf692145feff66799e42bf18e.jpg",
@@ -154,7 +154,7 @@ export const drinks: Product[] = [
     name: "SAM ADAMS",
     category: "Beer",
     price: { retail: 31.0, wholesale: 28.0 },
-    qty: 11,
+    qty: 20,
     inStock: true,
     image:
       "https://i.pinimg.com/564x/02/e3/2e/02e32e09f8d0f8454a6e3bfaf3b7b602.jpg",
@@ -164,7 +164,7 @@ export const drinks: Product[] = [
     name: "KONA BREWING CO.",
     category: "Beer",
     price: { retail: 32.0, wholesale: 29.0 },
-    qty: 6,
+    qty: 16,
     inStock: true,
     image:
       "https://i.pinimg.com/564x/c0/ae/6c/c0ae6c9d9b43e452e2ac3fcf8d2dbc2e.jpg",
@@ -204,7 +204,7 @@ export const drinks: Product[] = [
     name: "COORS LIGHT",
     category: "Beer",
     price: { "retail": 21.0, "wholesale": 18.0 },
-    qty: 9,
+    qty: 19,
     inStock: true,
    image: "https://i.pinimg.com/564x/c1/e6/79/c1e6792e8a8bed6f4d2757099b367026.jpg"
   },
@@ -213,7 +213,7 @@ export const drinks: Product[] = [
     name: "SAPPORO",
     category: "Beer",
     price: { "retail": 29.0, "wholesale": 25.0 },
-    qty: 11,
+    qty: 20,
     inStock: true,
    image: "https://i.pinimg.com/564x/6e/c6/b6/6ec6b624a72a902d1e5216e6d73399b3.jpg"
   },
@@ -231,7 +231,7 @@ export const drinks: Product[] = [
     name: "FOSTER'S",
     category: "Beer",
     price: { "retail": 24.0, "wholesale": 21.0 },
-    qty: 8,
+    qty: 18,
     inStock: true,
    image: "https://i.pinimg.com/564x/01/6c/e8/016ce8cbcf6bccf4cc7a2019b50a7641.jpg"
   },
@@ -240,7 +240,7 @@ export const drinks: Product[] = [
     name: "NEWCASTLE BROWN ALE",
     category: "Beer",
     price: { "retail": 27.0, "wholesale": 23.0 },
-    qty: 6,
+    qty: 16,
     inStock: true,
    image: "https://i.pinimg.com/564x/24/78/49/2478499732f07ce4debf00789c1130a9.jpg"
   },
@@ -254,20 +254,11 @@ export const drinks: Product[] = [
    image: "https://i.pinimg.com/564x/03/96/2f/03962f6ebacefc413dcfc0ce9a14e2e6.jpg"
   },
   {
-    id: "25",
-    name: "ABSOLUT VODKA",
-    category: "Wine & Spirit",
-    price: { "retail": 90.0, "wholesale": 80.0 },
-    qty: 10,
-    inStock: true,
-   image: "https://i.pinimg.com/564x/ed/6b/ca/ed6bca3f6979a983761f6a91544fd3c9.jpg"
-  },
-  {
     id: "26",
     name: "CROWN ROYAL",
     category: "Wine & Spirit",
     price: { "retail": 110.0, "wholesale": 95.0 },
-    qty: 8,
+    qty: 18,
     inStock: true,
    image: "https://i.pinimg.com/564x/2a/51/bd/2a51bd946b4a32f6e5905991eb1a0bd4.jpg"
   },
@@ -276,7 +267,7 @@ export const drinks: Product[] = [
     name: "MOET & CHANDON",
     category: "Wine & Spirit",
     price: { "retail": 250.0, "wholesale": 230.0 },
-    qty: 5,
+    qty: 15,
     inStock: true,
    image: "https://i.pinimg.com/564x/ee/e2/d1/eee2d1453bddaec3849749a8c387b017.jpg"
   },
@@ -285,7 +276,7 @@ export const drinks: Product[] = [
     name: "HENNESSY",
     category: "Wine & Spirit",
     price: { "retail": 150.0, "wholesale": 135.0 },
-    qty: 7,
+    qty: 20,
     inStock: true,
    image: "https://i.pinimg.com/564x/c8/62/84/c862845f2a31b326fcf7e651304f0472.jpg"
   },
@@ -294,7 +285,7 @@ export const drinks: Product[] = [
     name: "BOMBAY SAPPHIRE",
     category: "Wine & Spirit",
     price: { "retail": 95.0, "wholesale": 85.0 },
-    qty: 6,
+    qty: 20,
     inStock: true,
    image: "https://i.pinimg.com/564x/ab/1a/6c/ab1a6ccbcdefaf490f432b1483914857.jpg"
   },
@@ -303,7 +294,7 @@ export const drinks: Product[] = [
     name: "CAPTAIN MORGAN",
     category: "Wine & Spirit",
     price: { "retail": 85.0, "wholesale": 75.0 },
-    qty: 9,
+    qty: 10,
     inStock: true,
    image: "https://i.pinimg.com/564x/86/e2/16/86e21657cb7c6b1b324b00f22a09a031.jpg"
   }
