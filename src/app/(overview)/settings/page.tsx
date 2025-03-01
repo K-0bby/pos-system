@@ -29,7 +29,7 @@ export default function Page() {
         break;
       case "theme":
         setIsDarkMode(value);
-        setTheme(value ? "dark" : "light"); // Correct toggle logic
+        setTheme(value ? "light" : "dark"); // Correct toggle logic
         break;
     }
 
