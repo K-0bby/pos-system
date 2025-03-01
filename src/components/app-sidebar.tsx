@@ -13,7 +13,7 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import { LayoutDashboard, Package, Flag, House, Settings } from "lucide-react";
+import { LayoutDashboard, Package, House, Settings, FileText } from "lucide-react";
 
 // Menu items
 const items = [
@@ -35,7 +35,7 @@ const items = [
   {
     title: "Reports",
     url: "/reports",
-    Icon: Flag,
+    Icon: FileText,
   },
   {
     title: "Settings",
