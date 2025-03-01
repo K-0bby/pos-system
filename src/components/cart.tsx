@@ -110,32 +110,41 @@ export default function Cart() {
 
   const handleCheckout = () => {
     const receipt = `
-====== RECEIPT ======
-${selectedTable ? `Table: ${selectedTable}` : "Take Away Order"}
-Type: ${salesType}
--------------------
-${state.items
-  .map(
-    (item) => `${item.name}
-Qty: ${item.quantity} x GH₵ ${(salesType === "Wholesale"
-      ? item.price.wholesale
-      : item.price.retail
-    ).toFixed(2)}
-Subtotal: GH₵ ${(
-      item.quantity *
-      (salesType === "Wholesale" ? item.price.wholesale : item.price.retail)
-    ).toFixed(2)}
-`
-  )
-  .join("")}
--------------------
-Discount: ${discount}%
-Total: GH₵ ${calculateDiscountedPrice()}
-===================
+  ====== RECEIPT ======
+  ${selectedTable ? `Table: ${selectedTable}` : "Take Away Order"}
+  Type: ${salesType}
+  -------------------
+  ${state.items
+    .map(
+      (item) => `${item.name}
+  Qty: ${item.quantity} x GH₵ ${(salesType === "Wholesale"
+        ? item.price.wholesale
+        : item.price.retail
+      ).toFixed(2)}
+  Subtotal: GH₵ ${(
+    item.quantity *
+    (salesType === "Wholesale" ? item.price.wholesale : item.price.retail)
+  ).toFixed(2)}
+  `
+    )
+    .join("")}
+  -------------------
+  Discount: ${discount}%
+  Total: GH₵ ${calculateDiscountedPrice()}
+  ===================
     `;
 
-    console.log(receipt);
-    toast.success("Receipt has been generated");
+    // Generate a downloadable file
+    const blob = new Blob([receipt], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `receipt-${Date.now()}.txt`; // Example: receipt-1671234567890.txt
+    link.click();
+    URL.revokeObjectURL(url);
+
+    // Notify the user and clear the cart
+    toast.success("Receipt has been downloaded");
     clearCart();
     setSelectedTable("Take Away Order");
   };
