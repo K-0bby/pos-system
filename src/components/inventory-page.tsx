@@ -24,13 +24,13 @@ export default function InventoryPage() {
 
   useEffect(() => {
     const searchQuery = searchParams.get("search") || "";
-    const selectedCategory = searchParams.get("category") || "";
+    const selectedCategory = searchParams.get("category") || "all";
 
     setFilteredInventory(
       inventory.filter(
         (item) =>
           item.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-          (selectedCategory ? item.category === selectedCategory : true)
+          (selectedCategory === "all" || item.category === selectedCategory)
       )
     );
   }, [searchParams, inventory]);
