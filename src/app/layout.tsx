@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { inter, roboto } from "@/components/ui/fonts";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: {
@@ -28,6 +29,7 @@ export default function RootLayout({
           {children}
         </ThemeProvider>
       </body>
+      <Toaster />
     </html>
   );
 }
