@@ -84,7 +84,7 @@ export default function Page() {
             setTimeRange(value as "week" | "month" | "year")
           }
         >
-          <SelectTrigger>
+          <SelectTrigger className="shadow-inner">
             <SelectValue placeholder="Select time range" />
           </SelectTrigger>
           <SelectContent>
@@ -96,7 +96,7 @@ export default function Page() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card className="col-span-2">
+        <Card className="col-span-2 shadow-inner">
           <CardHeader>
             <CardTitle>Sales & Revenue Trend</CardTitle>
           </CardHeader>
@@ -116,7 +116,7 @@ export default function Page() {
           </CardContent>
         </Card>
 
-        <Card className="col-span-2">
+        <Card className="col-span-2 lg:col-span-1 shadow-inner">
           <CardHeader>
             <CardTitle>Market Share</CardTitle>
           </CardHeader>
@@ -153,7 +153,7 @@ export default function Page() {
           </CardContent>
         </Card>
 
-        <Card className="col-span-2">
+        <Card className="col-span-2 lg:col-span-1 shadow-inner">
           <CardHeader>
             <CardTitle>Top Products</CardTitle>
           </CardHeader>

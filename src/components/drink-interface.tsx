@@ -11,10 +11,18 @@ import {
   PaginationItem,
   PaginationLink,
 } from "@/components/ui/pagination";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "./ui/button";
 import { drinks, Product } from "@/lib/data"; // Importing drinks data
 import { useCart } from "@/context/cart-context";
 import { toast } from "sonner";
-
 
 interface DrinksInterfaceProps {
   searchQuery: string; // Receive search query as a prop
@@ -46,9 +54,11 @@ export default function DrinksInterface({ searchQuery }: DrinksInterfaceProps) {
   }, [state.items]);
 
   const filteredDrinks = stock.filter(
-    (drink) => drink.category === selectedTab && (!searchQuery || drink.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    (drink) =>
+      drink.category === selectedTab &&
+      (!searchQuery ||
+        drink.name.toLowerCase().includes(searchQuery.toLowerCase()))
   );
-
 
   const totalPages = Math.ceil(filteredDrinks.length / itemsPerPage);
   const paginatedDrinks = filteredDrinks.slice(
@@ -72,7 +82,7 @@ export default function DrinksInterface({ searchQuery }: DrinksInterfaceProps) {
 
   return (
     <div className="flex flex-col">
-      <Tabs value={selectedTab} onValueChange={handleTabChange}>
+       <Tabs value={selectedTab} onValueChange={handleTabChange}>
         <TabsList className="flex flex-wrap items-center justify-between gap-4 sm:gap-10 border-b border-gray-100 px-4 sm:px-10">
           {categories.map((tab) => (
             <TabsTrigger
@@ -118,18 +128,9 @@ export default function DrinksInterface({ searchQuery }: DrinksInterfaceProps) {
           {categories.map((tab) => (
             <TabsContent key={tab} value={tab}>
               {paginatedDrinks.length === 0 ? (
-                <p className="text-center text-gray-500">
-                  No drinks available.
-                </p>
-              ) : (
-                <div
-                  className={clsx(
-                    "gap-4",
-                    viewType === "grid"
-                      ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4"
-                      : "w-full"
-                  )}
-                >
+                <p className="text-center text-gray-500">No drinks available.</p>
+              ) : viewType === "grid" ? (
+                <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
                   {paginatedDrinks.map((drink) => (
                     <div
                       key={drink.id}
@@ -164,6 +165,59 @@ export default function DrinksInterface({ searchQuery }: DrinksInterfaceProps) {
                     </div>
                   ))}
                 </div>
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Image</TableHead>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Quantity</TableHead>
+                      <TableHead>Price</TableHead>
+                      <TableHead>Action</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {paginatedDrinks.map((drink) => (
+                      <TableRow
+                        key={drink.id}
+                        className={clsx(
+                          drink.qty > 0
+                            ? "hover:bg-gray-100"
+                            : "opacity-50 cursor-not-allowed"
+                        )}
+                      >
+                        <TableCell>
+                          <Image
+                            src={drink.image}
+                            alt={drink.name}
+                            width={50}
+                            height={50}
+                            className="rounded-full"
+                          />
+                        </TableCell>
+                        <TableCell>{drink.name}</TableCell>
+                        <TableCell>
+                          {drink.qty > 0 ? `Qty: ${drink.qty}` : "Out of Stock"}
+                        </TableCell>
+                        <TableCell>GH¢ {drink.price.retail.toFixed(2)}</TableCell>
+                        <TableCell>
+                          <Button
+                            onClick={() => handleAddToCart(drink)}
+                            disabled={drink.qty === 0}
+                            className={clsx(
+                              "px-3 py-1 text-sm rounded",
+                              drink.qty > 0
+                                ? "text-white"
+                                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                            )}
+                          >
+                            Add to Cart
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               )}
             </TabsContent>
           ))}
@@ -171,7 +225,7 @@ export default function DrinksInterface({ searchQuery }: DrinksInterfaceProps) {
       </Tabs>
 
       {totalPages > 1 && (
-        <Pagination className="mt-5 self-center">
+        <Pagination className="mt-10 self-center">
           <PaginationContent>
             {[...Array(totalPages)].map((_, index) => (
               <PaginationItem key={index + 1}>

@@ -94,7 +94,7 @@ export default function InventoryPage() {
           onValueChange={(value) => updateSearchParams("category", value)}
           value={searchParams.get("category") || "all"}
         >
-          <SelectTrigger className="w-48">
+          <SelectTrigger className="w-48 shadow-inner">
             <SelectValue placeholder="Filter by Category" />
           </SelectTrigger>
           <SelectContent>

@@ -22,7 +22,7 @@ export default function Search({ placeholder, onSearch }: SearchProps) {
       <Input
         id="search"
         placeholder={placeholder}
-        className="pl-10 focus:outline-none h-12 rounded-xl" 
+        className="pl-10 focus:outline-none h-12 rounded-xl shadow-inner" 
         onChange={(e) => handleSearch(e.target.value)}
       />
       <SearchIcon className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500" />

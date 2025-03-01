@@ -152,7 +152,7 @@ export default function Cart() {
   return (
     <div className="grid grid-cols-1 gap-6">
       <div className="sm:col-span-2 lg:col-span-2 space-y-6">
-        <Card>
+        <Card className="shadow-inner">
           <CardHeader>
             <CardTitle>Cart Summary</CardTitle>
           </CardHeader>
@@ -181,7 +181,7 @@ export default function Cart() {
                   Table:
                 </label>
                 <Select value={selectedTable} onValueChange={setSelectedTable}>
-                  <SelectTrigger className="w-full sm:w-1/2">
+                  <SelectTrigger className="w-full sm:w-1/2 shadow-inner">
                     <SelectValue placeholder="Select Table" />
                   </SelectTrigger>
                   <SelectContent>
@@ -205,7 +205,7 @@ export default function Cart() {
                   value={discount.toString()}
                   onValueChange={(value) => setDiscount(Number(value))}
                 >
-                  <SelectTrigger className="w-full sm:w-1/2">
+                  <SelectTrigger className="w-full sm:w-1/2 shadow-inner">
                     <SelectValue placeholder="Select Discount" />
                   </SelectTrigger>
                   <SelectContent>
@@ -223,7 +223,7 @@ export default function Cart() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="shadow-inner">
           <CardHeader>
             <CardTitle>Cart Items</CardTitle>
           </CardHeader>
@@ -295,7 +295,7 @@ export default function Cart() {
       </div>
 
       <div className="space-y-4 col-span-2">
-        <Card>
+        <Card className="shadow-inner">
           <CardHeader>
             <CardTitle>Checkout</CardTitle>
           </CardHeader>

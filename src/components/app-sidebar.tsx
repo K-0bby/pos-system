@@ -13,7 +13,7 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import { LayoutDashboard, Package, Flag, House } from "lucide-react";
+import { LayoutDashboard, Package, Flag, House, Settings } from "lucide-react";
 
 // Menu items
 const items = [
@@ -37,6 +37,11 @@ const items = [
     url: "/reports",
     Icon: Flag,
   },
+  {
+    title: "Settings",
+    url: "/settings",
+    Icon: Settings,
+  },
 ];
 
 export function AppSidebar() {
@@ -54,7 +59,7 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu className="pt-10 space-y-5">
+            <SidebarMenu className="pt-10 space-y-1">
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
@@ -65,7 +70,7 @@ export function AppSidebar() {
                       }`}
                     >
                       <item.Icon className="w-8 h-8" />
-                      <span className="text-base font-medium text-gray-700">
+                      <span className="text-base font-medium">
                         {item.title}
                       </span>
                     </Link>
