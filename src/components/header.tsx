@@ -146,7 +146,7 @@ export default function Header() {
           <DropdownMenuContent className="rounded-lg">
             <DropdownMenuItem asChild>
               <Link
-                href="/profile-settings"
+                href="/profile"
                 className="flex items-center gap-2"
               >
                 <UserRoundPen />
