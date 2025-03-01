@@ -8,11 +8,11 @@ import { toast } from "sonner";
 export default function Profile() {
   // Mock user data - replace with actual API data
   const [userData, setUserData] = useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
-    company: "Acme Inc.",
+    name: "Robert Singer",
+    email: "rob.singer@example.com",
+    company: "Afro Drinks",
     phone: "+1 (555) 123-4567",
-    role: "Store Manager",
+    role: "Admin",
   });
 
   const handleUpdateProfile = (updatedData: typeof userData) => {
