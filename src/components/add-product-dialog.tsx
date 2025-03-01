@@ -93,7 +93,7 @@ export default function AddProductDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
+        <Button className="p-5">
           <Plus className="mr-2 h-4 w-4" /> Add New Product
         </Button>
       </DialogTrigger>
