@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
+import { useState } from "react";
+// import { useTheme } from "next-themes";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -10,14 +10,14 @@ import { toast } from "sonner";
 type SettingType = "email" | "stock" | "theme";
 
 export default function Page() {
-  const { resolvedTheme, setTheme } = useTheme(); // Use resolvedTheme to handle hydration issues
+  // const { resolvedTheme, setTheme } = useTheme(); // Use resolvedTheme to handle hydration issues
   const [emailNotifications, setEmailNotifications] = useState(false);
   const [stockAlerts, setStockAlerts] = useState(true);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  // const [isDarkMode, setIsDarkMode] = useState(false);
 
-  useEffect(() => {
-    setIsDarkMode(resolvedTheme === "dark"); // Sync dark mode state
-  }, [resolvedTheme]);
+  // useEffect(() => {
+  //   setIsDarkMode(resolvedTheme === "dark"); // Sync dark mode state
+  // }, [resolvedTheme]);
 
   const handleSettingChange = (setting: SettingType, value: boolean) => {
     switch (setting) {
@@ -27,10 +27,10 @@ export default function Page() {
       case "stock":
         setStockAlerts(value);
         break;
-      case "theme":
-        setIsDarkMode(value);
-        setTheme(value ? "light" : "dark"); // Correct toggle logic
-        break;
+      // case "theme":
+      //   setIsDarkMode(value);
+      //   setTheme(value ? "light" : "dark"); // Correct toggle logic
+      //   break;
     }
 
     toast("Settings Updated", {
@@ -92,8 +92,8 @@ export default function Page() {
                 </p>
               </div>
               <Switch
-                checked={isDarkMode}
-                onCheckedChange={handleSettingChange.bind(null, "theme")}
+              // checked={isDarkMode}
+              // onCheckedChange={handleSettingChange.bind(null, "theme")}
               />
             </div>
           </CardContent>
